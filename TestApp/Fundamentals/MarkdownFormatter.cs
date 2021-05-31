@@ -11,7 +11,22 @@ namespace TestApp
     {
         public string FormatAsBold(string content)
         {
+            Validate(content);
+
             return $"**{content}**";
+        }
+
+        public string FormatAsItalic(string content)
+        {
+            Validate(content);
+
+            return $"_{content}_";
+        }
+
+        private static void Validate(string content)
+        {
+            if (string.IsNullOrWhiteSpace(content))
+                throw new FormatException();
         }
     }
 }

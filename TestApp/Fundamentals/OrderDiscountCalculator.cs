@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TestApp.Fundamentals
@@ -36,6 +37,8 @@ namespace TestApp.Fundamentals
             {
                 throw new ArgumentNullException(nameof(order));
             }
+
+           // Thread.Sleep(TimeSpan.FromMilliseconds(190));
 
             if (order.OrderDate.TimeOfDay >= begin && order.OrderDate.TimeOfDay<=end)
             {
