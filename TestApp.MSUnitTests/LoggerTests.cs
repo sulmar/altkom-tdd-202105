@@ -51,5 +51,7 @@ namespace TestApp.MSUnitTests
             // Act
             logger.Log(" ");
         }
+
+        // Metod prywatnych nie testujemy!!!
     }
 }

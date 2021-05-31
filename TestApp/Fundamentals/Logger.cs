@@ -20,7 +20,14 @@ namespace TestApp
             // Write the log to a storage
             // ...
 
+            Save(message);
+
             MessageLogged?.Invoke(this, DateTime.UtcNow);
+        }
+
+        private void Save(string message)
+        {
+
         }
     }
 }
