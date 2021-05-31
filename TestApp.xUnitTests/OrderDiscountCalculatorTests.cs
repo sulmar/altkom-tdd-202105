@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FluentAssertions;
+using FluentAssertions.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,8 @@ using Xunit;
 
 namespace TestApp.xUnitTests
 {
+    // FluentAssertions
+
     // Happy Hours - w godz. 9:00 - 16:30 klient otrzymuje 10% upustu
     public class OrderDiscountCalculatorTests
     {
@@ -33,7 +37,10 @@ namespace TestApp.xUnitTests
             decimal result = calculator.CalculateDiscount(order);
 
             // Assert
-            Assert.Equal(expected: 0, result);
+            // Assert.Equal(expected: 0, result);
+
+            result.Should().Be(0);
+
         }
 
         [Fact]
@@ -46,7 +53,10 @@ namespace TestApp.xUnitTests
             decimal result = calculator.CalculateDiscount(order);
 
             // Assert
-            Assert.Equal(expected: 0, result);
+            // Assert.Equal(expected: 0, result);
+
+            result.Should().Be(0);
+            
         }
 
         [Fact]
@@ -58,7 +68,9 @@ namespace TestApp.xUnitTests
             decimal result = calculator.CalculateDiscount(order);
 
             // Assert
-            Assert.Equal(expected: 10, result);
+            // Assert.Equal(expected: 10, result);
+
+            result.Should().Be(10);
         }
 
         [Fact]
@@ -70,7 +82,9 @@ namespace TestApp.xUnitTests
             decimal result = calculator.CalculateDiscount(order);
 
             // Assert
-            Assert.Equal(expected: 10, result);
+            // Assert.Equal(expected: 10, result);
+
+            result.Should().Be(10);
         }
 
         [Fact]
@@ -80,8 +94,20 @@ namespace TestApp.xUnitTests
             Action act = ()=>calculator.CalculateDiscount(null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(act);
+            // Assert.Throws<ArgumentNullException>(act);
 
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("order");
+
+        }
+
+        [Fact]
+        public void CalculateDiscount_ValidOrder_ShouldExecutionTimeIsBelow200ms()
+        {
+            // Act
+            Action act = () => calculator.CalculateDiscount(new Order());
+
+            // Assert
+            act.ExecutionTime().Should().BeLessOrEqualTo(200.Milliseconds());
         }
     }
 }
