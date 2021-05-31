@@ -63,6 +63,29 @@ namespace TestApp.MSUnitTests
             
         }
 
+        //[TestMethod]
+        //public void CanReturn_UserIsEmpty_ReturnsFalse()
+        //{
+        //    // Act
+        //    bool result = rent.CanReturn(null);
+
+        //    // Assert
+        //    Assert.IsFalse(result);
+        //}
+
+        // ArgumentNullException
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void CanReturn_UserIsEmpty_ThrowsArgumentNullException()
+        {
+            // Act
+            bool result = rent.CanReturn(null);
+
+            // Assert
+
+        }
+
 
     }
 }
