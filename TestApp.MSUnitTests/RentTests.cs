@@ -16,15 +16,24 @@ namespace TestApp.MSUnitTests
         // 3. Czy użytkownik jest inny niż ten, który wynajął -> false
 
 
+        private User rentee;
+        private Rent rent;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            // Arrange
+            rentee = new User();
+            rent = new Rent { Rentee = rentee };
+
+        }
+
+
         // Method_Scenario_ExptectedBehavior
 
         [TestMethod]
         public void CanReturn_UserIsAdmin_ReturnsTrue()
         {
-            // Arrange
-            User rentee = new User();
-            Rent rent = new Rent { Rentee = rentee };
-
             // Act
             bool result = rent.CanReturn(new User { IsAdmin = true });
 
@@ -35,10 +44,6 @@ namespace TestApp.MSUnitTests
         [TestMethod]
         public void CanReturn_UserIsRentee_ReturnsTrue()
         {
-            // Arrange
-            User rentee = new User();
-            Rent rent = new Rent { Rentee = rentee };
-
             // Act
             bool result = rent.CanReturn(rentee);
 
@@ -50,10 +55,6 @@ namespace TestApp.MSUnitTests
         [TestMethod]
         public void CanReturn_UserIsNotRentee_ReturnsFalse()
         {
-            // Arrange
-            User rentee = new User();
-            Rent rent = new Rent { Rentee = rentee };
-
             // Act
             bool result = rent.CanReturn(new User());
 
