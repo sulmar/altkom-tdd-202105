@@ -15,6 +15,7 @@ namespace TestApp.MSUnitTests
         [TestInitialize]
         public void Setup()
         {
+            // Arrange
             logger = new Logger();
         }
 
@@ -53,5 +54,20 @@ namespace TestApp.MSUnitTests
         }
 
         // Metod prywatnych nie testujemy!!!
+
+        [TestMethod]
+        public void Log_ValidMessage_RaiseMessageLoggedEvent()
+        {
+            // Arrange
+            DateTime id = default;
+
+            logger.MessageLogged += (sender, args) => { id = args.LogDate; };
+
+            // Act
+            logger.Log("a");
+
+            // Assert
+            Assert.AreNotEqual(notExpected: default, id);
+        }
     }
 }

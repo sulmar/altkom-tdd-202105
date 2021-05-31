@@ -4,11 +4,22 @@ using System.Text;
 
 namespace TestApp
 {
+    public class LogEventArgs : EventArgs
+    {
+        public DateTime LogDate { get; set; }
+
+        public LogEventArgs(DateTime logDate)
+        {
+            this.LogDate = logDate;
+        }
+    }
+
     public class Logger
     {
         public string LastMessage { get; set; }
+        
 
-        public event EventHandler<DateTime> MessageLogged;
+        public event EventHandler<LogEventArgs> MessageLogged;
 
         public void Log(string message)
         {
@@ -22,7 +33,7 @@ namespace TestApp
 
             Save(message);
 
-            MessageLogged?.Invoke(this, DateTime.UtcNow);
+            MessageLogged?.Invoke(this, new LogEventArgs(DateTime.UtcNow));
         }
 
         private void Save(string message)
