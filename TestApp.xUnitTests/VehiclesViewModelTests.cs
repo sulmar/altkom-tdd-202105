@@ -42,7 +42,7 @@ namespace TestApp.xUnitTests
 
 
         [Fact]
-        public async Task CanSearch_InvalidSearchCriteria_ShouldReturnsFalse()
+        public void CanSearch_InvalidSearchCriteria_ShouldReturnsFalse()
         {
             // Arrange
             IVehicleRepository vehicleRepository = Mock.Of<IVehicleRepository>();
