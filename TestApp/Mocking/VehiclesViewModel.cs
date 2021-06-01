@@ -16,19 +16,22 @@ namespace TestApp.Mocking
 
         private readonly IVehicleRepository vehicleRepository;
 
-        public VehiclesViewModel()
+        public VehiclesViewModel(IVehicleRepository vehicleRepository)
         {
+            this.vehicleRepository = vehicleRepository;
+
             this.Criteria = new VehicleSearchCriteria();
-              
-            SearchCommand = new RelayCommand(async () => await SearchAsync(), () => CanSearch);    
+
+            SearchCommand = new RelayCommand(async () => await SearchAsync(), () => CanSearch);
+
         }
 
         public async Task SearchAsync()
         {
             this.Vehicles = await vehicleRepository.GetAsync(Criteria);
         }
-        
-        public bool CanSearch => true;
+
+        public bool CanSearch => !string.IsNullOrEmpty(Criteria.Model);
 
     }
 
