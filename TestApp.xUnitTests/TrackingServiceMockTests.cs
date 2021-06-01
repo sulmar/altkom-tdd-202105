@@ -26,7 +26,7 @@ namespace TestApp.xUnitTests
         {
             // Arrange
             mockFileReader
-                .Setup(fr => fr.ReadAllText("tracking.txt"))
+                .Setup(fr => fr.ReadAllText(It.IsAny<string>()))
                 .Returns(string.Empty);
 
             // Act
@@ -41,7 +41,7 @@ namespace TestApp.xUnitTests
         {
             // Arrange
             mockFileReader
-                .Setup(fr => fr.ReadAllText("tracking.txt"))
+                .Setup(fr => fr.ReadAllText(It.IsAny<string>()))
                 .Returns("a");
 
             // Act
@@ -61,7 +61,7 @@ namespace TestApp.xUnitTests
         {
             // Arrange
             mockFileReader
-                .Setup(fr => fr.ReadAllText("tracking.txt"))
+                .Setup(fr => fr.ReadAllText(It.IsAny<string>()))
                 .Returns("{\"Latitude\":53.010001,\"Longitude\":18.990001}");
 
             // Act
