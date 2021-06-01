@@ -28,7 +28,7 @@ namespace Api.Controllers
         {
             var vehicle = context.Vehicles.Find(id);
             context.Vehicles.Remove(vehicle);
-            context.SaveChanges();
+            // context.SaveChanges();
             return RedirectToAction("Vehicles");
         }
     }
