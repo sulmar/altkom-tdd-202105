@@ -11,19 +11,23 @@ namespace TestApp.xUnitTests
 {
     public class TrackingServiceMockTests
     {
+        private Mock<IFileReader> mockFileReader;
+        private TrackingService trackingService;
+
+        public TrackingServiceMockTests()
+        {
+            // Arrange
+            mockFileReader = new Mock<IFileReader>();
+            trackingService = new TrackingService(mockFileReader.Object);
+        }
+
         [Fact]
         public void Get_EmptyFile_ShouldThrowApplicationException()
         {
             // Arrange
-            Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
-
             mockFileReader
                 .Setup(fr => fr.ReadAllText("tracking.txt"))
                 .Returns(string.Empty);
-
-            IFileReader fileReader = mockFileReader.Object;
-
-            TrackingService trackingService = new TrackingService(fileReader);
 
             // Act
             Action act = () => trackingService.Get();
@@ -36,15 +40,9 @@ namespace TestApp.xUnitTests
         public void Get_InvalidFile_ShouldThrowFormatException()
         {
             // Arrange
-            Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
-
             mockFileReader
                 .Setup(fr => fr.ReadAllText("tracking.txt"))
                 .Returns("a");
-
-            IFileReader fileReader = mockFileReader.Object;
-
-            TrackingService trackingService = new TrackingService(fileReader);
 
             // Act
             Action act = () => trackingService.Get();
@@ -62,15 +60,9 @@ namespace TestApp.xUnitTests
         public void Get_ValidFile_ShouldReturnsLocation()
         {
             // Arrange
-            Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
-
             mockFileReader
                 .Setup(fr => fr.ReadAllText("tracking.txt"))
                 .Returns("{\"Latitude\":53.010001,\"Longitude\":18.990001}");
-
-            IFileReader fileReader = mockFileReader.Object;
-
-            TrackingService trackingService = new TrackingService(fileReader);
 
             // Act
             Location result = trackingService.Get();
