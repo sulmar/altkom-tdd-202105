@@ -8,24 +8,88 @@ using System.Threading.Tasks;
 
 namespace TestApp.Mocking
 {
-    public class SalaryCalculatorService
-    {
-        const string url = "api/exchangerates/tables/a/?format=json";
 
-        public async Task<decimal> CalculateAsync(decimal amount, string currencyCode = "PLN")
+    public interface IHttpClient
+    {
+        Task<RatesList[]> GetFromJsonAsync<T>(string url);
+    }
+
+   
+
+    public class StandardHttpClient : IHttpClient
+    {
+        public async Task<RatesList[]> GetFromJsonAsync<T>(string url)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://api.nbp.pl/");
 
             var rates = await client.GetFromJsonAsync<RatesList[]>(url);
 
-            Rate rate = rates.SelectMany(p => p.rates).SingleOrDefault(r=>r.code == currencyCode);
+            return rates;
+        }
 
-            decimal result = amount * (decimal) rate.mid;
+        
+    }
+
+    public interface IRateService
+    {
+        Task<Rate> GetAsync(string currencyCode);
+    }
+
+    public class NbpRateService : IRateService
+    {
+        const string url = "api/exchangerates/tables/a/?format=json";
+
+        private readonly IHttpClient client;
+
+        public NbpRateService(IHttpClient client)
+        {
+            this.client = client;
+        }
+
+        public async Task<Rate> GetAsync(string currencyCode)
+        {
+            return await GetRate(currencyCode);
+        }
+
+        private async Task<Rate> GetRate(string currencyCode)
+        {
+            RatesList[] rates = await GetRates();
+
+            Rate rate = rates.SelectMany(p => p.rates).SingleOrDefault(r => r.code == currencyCode);
+
+            return rate;
+        }
+
+        private async Task<RatesList[]> GetRates()
+        {
+            return await client.GetFromJsonAsync<RatesList[]>(url);
+        }
+    }
+
+    public class SalaryCalculatorService
+    {
+        private readonly IRateService rateService;
+
+        public SalaryCalculatorService(IRateService rateService)
+        {
+            this.rateService = rateService;
+        }
+
+        public async Task<decimal> CalculateAsync(decimal amount, string currencyCode = "PLN")
+        {
+            if (currencyCode == "PLN")
+                return amount;
+
+            Rate rate = await rateService.GetAsync(currencyCode);
+
+            decimal result = amount * (decimal)rate.mid;
 
             return result;
 
         }
+
+        
     }
 
 
