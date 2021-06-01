@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{525E2DDA-A278-4090-9AB8-B1CEDA62C9B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp.MSUnitTests", "TestApp.MSUnitTests\TestApp.MSUnitTests.csproj", "{EFABA12B-40B2-41E3-BD2E-1C9876FB15C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.MSUnitTests", "TestApp.MSUnitTests\TestApp.MSUnitTests.csproj", "{EFABA12B-40B2-41E3-BD2E-1C9876FB15C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp.xUnitTests", "TestApp.xUnitTests\TestApp.xUnitTests.csproj", "{23E9E798-7311-4A89-B0DF-2E3E56D63C61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.xUnitTests", "TestApp.xUnitTests\TestApp.xUnitTests.csproj", "{23E9E798-7311-4A89-B0DF-2E3E56D63C61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{96DF09AF-66A9-4608-B60B-779DFC9A9D29}"
+	ProjectSection(SolutionItems) = preProject
+		test-method.snippet = test-method.snippet
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
