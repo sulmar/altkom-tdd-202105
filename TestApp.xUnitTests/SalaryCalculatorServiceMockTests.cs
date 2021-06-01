@@ -9,6 +9,12 @@ using Xunit;
 
 namespace TestApp.xUnitTests
 {
+    public class SalaryCalculatorServiceLinqToMockTests
+    {
+
+    }
+
+
     public class SalaryCalculatorServiceMockTests
     {
         private Mock<IRateService> mockRateService;
