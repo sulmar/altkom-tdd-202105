@@ -83,6 +83,9 @@ namespace TestApp.Mocking
 
             Rate rate = await rateService.GetAsync(currencyCode);
 
+            //if (rate == null)
+            //    rate = new Rate { code = "PLN", mid = 1 };
+
             decimal result = amount * (decimal)rate.mid;
 
             return result;

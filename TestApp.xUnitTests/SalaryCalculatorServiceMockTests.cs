@@ -21,6 +21,7 @@ namespace TestApp.xUnitTests
         }
 
         [Theory]
+        [InlineData(100, "", 1f, 100)]
         [InlineData(100, "PLN", 1f, 100)]
         [InlineData(100, "EUR", 4.01f, 401)]
         [InlineData(100, "USD", 4.00f, 400)]
@@ -37,6 +38,39 @@ namespace TestApp.xUnitTests
             // Assert
             Assert.Equal(expected: expected, result);
         }
+
+        [Fact]
+        public async Task CalculateAsync_AmountPLN_ShouldNotCallGetAsync()
+        {
+            // Arrange
+            mockRateService
+                .Setup(rt => rt.GetAsync("PLN"))
+                .Verifiable();
+
+            // Act
+            await salaryCalculatorService.CalculateAsync(100, "PLN");
+
+            // Assert
+            mockRateService.Verify(rt => rt.GetAsync("PLN"), Times.Never);
+        }
+
+        [Fact]
+        public async Task CalculateAsync_AmountUSD_ShouldCallGetAsync()
+        {
+            // Arrange
+            mockRateService
+                .Setup(rt => rt.GetAsync("USD"))
+                .ReturnsAsync(new Rate { code = "USD", mid = 4.00f })
+                .Verifiable();
+
+            // Act
+            await salaryCalculatorService.CalculateAsync(100, "USD");
+
+            // Assert
+            mockRateService.Verify(rt => rt.GetAsync("USD"), Times.Once);
+        }
+
+
 
 
         /*
